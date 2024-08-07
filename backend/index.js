@@ -1,6 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+require('dotenv').config()
+
+// Import Env
+
+DB_CONN = process.env.MONGODB_URL;
+PORT = process.env.PORT;
+
 const app = express();
 
 // Middleware to parse JSON requests
@@ -17,11 +24,22 @@ app.get('/', (req, res) => {
 });
 
 
+
 // Mongoose Database connection
 
-
-
-
-app.listen(5001, () => {
-    console.log(`Server is running on port: 5001`);
+mongoose.connect(DB_CONN)
+  .then(() => {
+    
+    console.log('Connected!')
+    
+    app.listen(PORT, () => {
+        console.log(`Server is running on port: ${PORT}`);
+      });
+  
+  })
+  
+  .catch(() => {
+    console.log(error)
   });
+
+
